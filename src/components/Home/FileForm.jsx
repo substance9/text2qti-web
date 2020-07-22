@@ -27,7 +27,7 @@ class FileForm extends React.Component {
       return (
         <form method="post" action="#" id="#">
               <div className="form-group files">
-                <label><b>OR Upload Your Markdown File (only accept .txt or .md file) </b></label>
+                <label><b>OR Upload Your Markdown File (only accept .txt or .md file) </b></label><br />
                 <input type="file" className="from-control" multiple="" onChange={this.handleChange}/>
               </div>
           </form>
