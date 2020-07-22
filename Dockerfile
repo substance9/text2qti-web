@@ -1,4 +1,4 @@
-FROM nikolaik/python-nodejs:python3.7-nodejs14
+FROM node:latest as build 
 
 RUN mkdir -p /usr/src/app
 COPY . /usr/src/app
@@ -6,8 +6,11 @@ COPY . /usr/src/app
 WORKDIR /usr/src/app
 RUN npm install
 
-RUN pip install -r ./server/requirements.txt
+RUN npm run build
 
-CMD ["npm", "start"]
+FROM nginx:alpine
+COPY --from=build /usr/src/app/build /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 3000
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

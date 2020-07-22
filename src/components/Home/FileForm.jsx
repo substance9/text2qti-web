@@ -1,4 +1,4 @@
-import "./filestyle.css"
+import styles from "./filestyle.css"
 
 import React from "react";
 
@@ -28,7 +28,7 @@ class FileForm extends React.Component {
         <form method="post" action="#" id="#">
               <div className="form-group files">
                 <label><b>OR Upload Your Markdown File (only accept .txt or .md file) </b></label>
-                <input type="file" className="form-control" multiple="" onChange={this.handleChange}/>
+                <input type="file" className="from-control" multiple="" onChange={this.handleChange}/>
               </div>
           </form>
       );

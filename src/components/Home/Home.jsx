@@ -44,7 +44,7 @@ class Home extends React.Component {
         method: 'POST',
         body: fileFormData
       };
-      fetch('/mdfile', requestOptions)
+      fetch('/api/mdfile', requestOptions)
         .then(response => {
           if (response.ok) {
             requestStatus = true;
@@ -68,7 +68,7 @@ class Home extends React.Component {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ mdtext: this.state.mdText })
       };
-      fetch('/mdtext', requestOptions)
+      fetch('/api/mdtext', requestOptions)
         .then(response => {
           if (response.ok) {
             requestStatus = true;

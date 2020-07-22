@@ -1,4 +1,5 @@
-from flask import Flask, jsonify, make_response, send_from_directory, request
+from flask import Flask, Blueprint, jsonify, make_response, send_from_directory, request
+from flask_cors import CORS
 import os
 from os.path import exists, join
 import random
@@ -14,7 +15,9 @@ from text2qti.config import Config
 from text2qti.quiz import Quiz
 from text2qti.qti import QTI
 
-app = Flask(__name__, static_folder='build')
+app = Flask(__name__)
+CORS(app)
+api = Blueprint('api', __name__)
 
 converted_file_dir = app.static_folder
 cwd = Path.cwd()
@@ -45,7 +48,7 @@ def get_new_filename(original_filename):
 
     return new_filename
 
-@app.route('/mdtext', methods=['POST'])
+@api.route('/mdtext', methods=['POST'])
 def process_mdtext():
     # print("mdtext request" , flush=True)
     content = request.json
@@ -55,7 +58,7 @@ def process_mdtext():
     # print(file_dict , flush=True)
     return jsonify(file_dict)
 
-@app.route('/mdfile', methods=['POST'])
+@api.route('/mdfile', methods=['POST'])
 def process_mdfile():
     # print("mdfile request" , flush=True)
     file = request.files['MDFile']
@@ -70,7 +73,7 @@ def process_mdfile():
     return jsonify(file_dict)
 
 
-@app.route('/qtifile/<filename_wo_suffix>', methods=['GET'])
+@api.route('/qtifile/<filename_wo_suffix>', methods=['GET'])
 def get_file(filename_wo_suffix):
     filename = filename_wo_suffix + '.zip'
     # print("request file " + filename, flush=True)
@@ -89,6 +92,8 @@ def catch_all(path):
 def page_not_found(error):
     json_response = jsonify({'error': 'Page not found'})
     return make_response(json_response, CONSTANTS['HTTP_STATUS']['404_NOT_FOUND'])
+
+app.register_blueprint(api, url_prefix='/api')
 
 def process_md_file(file_path):
     try:
@@ -121,4 +126,4 @@ def process_md_text(text, output_filename=None):
 if __name__ == '__main__':
     Path.mkdir(temp_upload_md_file_dir, exist_ok=True)
     Path.mkdir(generated_qti_dir, exist_ok=True)
-    app.run(port=CONSTANTS['PORT'])
+    app.run(host='0.0.0.0',port=CONSTANTS['PORT'])

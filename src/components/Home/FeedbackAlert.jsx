@@ -8,7 +8,7 @@ class SuccessFeedback extends React.Component {
   }
   
   handleLinkClick(event) {
-    fetch('/qtifile/' + this.state.downloadFileName)
+   fetch('/api/qtifile/' + this.state.downloadFileName)
       .then(response => {
         //const filename =  response.headers.get('Content-Disposition').split('filename=')[1];
         response.blob().then(blob => {
