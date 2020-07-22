@@ -4,7 +4,6 @@ generated_qti/
 .DS_Store
 .vscode
 .deployment
-*.txt
 *.zip
 
 # Logs
