@@ -53,10 +53,18 @@ def process_mdtext():
     # print("mdtext request" , flush=True)
     content = request.json
     mdtext = content['mdtext']
-    output_filename = process_md_text(mdtext)
-    file_dict = {'err':'11', 'filename': output_filename}
+    error = ""
+    output_filename = ""
+    try:
+        output_filename = process_md_text(mdtext)
+    except Exception as e:
+        error = str(e)
+        return_dict = {'err':error}
+        return jsonify(return_dict), 500
+    
+    return_dict = {'filename': output_filename}
     # print(file_dict , flush=True)
-    return jsonify(file_dict)
+    return jsonify(return_dict)
 
 @api.route('/mdfile', methods=['POST'])
 def process_mdfile():
@@ -67,10 +75,18 @@ def process_mdfile():
     filename = secure_filename(file.filename) 
     new_filename = get_new_filename(filename)
     file.save(temp_upload_md_file_dir/new_filename)
-    output_filename = process_md_file(temp_upload_md_file_dir/new_filename)
-    file_dict = {'err':'11', 'filename': output_filename}
+    error = ""
+    output_filename = ""
+    try:
+        output_filename = process_md_file(temp_upload_md_file_dir/new_filename)
+    except Exception as e:
+        error = str(e)
+        return_dict = {'err':error}
+        return jsonify(return_dict), 500
+    
+    return_dict = {'filename': output_filename}
     # print(file_dict , flush=True)
-    return jsonify(file_dict)
+    return jsonify(return_dict)
 
 
 @api.route('/qtifile/<filename_wo_suffix>', methods=['GET'])
@@ -116,10 +132,11 @@ def process_md_text(text, output_filename=None):
         output_filename = output_filename.rsplit('.',1)[0]
 
     config = Config()
-
+    
     quiz = Quiz(text, config=config, source_name=output_filename)
     qti = QTI(quiz)
     qti.save(generated_qti_dir / f'{output_filename}.zip')
+    
     
     return output_filename
 

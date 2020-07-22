@@ -56,9 +56,9 @@ class Home extends React.Component {
         })
         .then(data => {
           if (requestStatus===true){
-            this.setState({ feedbackStatus: "success", downloadFileName: data.filename, feedbackErrMsg: data.err });
+            this.setState({ feedbackStatus: "success", downloadFileName: data.filename});
           } else {
-            this.setState({ feedbackStatus: "error", downloadFileName: data.filename, feedbackErrMsg: data.err });
+            this.setState({ feedbackStatus: "error", feedbackErrMsg: data.err });
           }        
         })
     }
@@ -80,9 +80,9 @@ class Home extends React.Component {
         })
         .then(data => {
           if (requestStatus===true){
-            this.setState({ feedbackStatus: "success", downloadFileName: data.filename, feedbackErrMsg: data.err });
+            this.setState({ feedbackStatus: "success", downloadFileName: data.filename});
           } else {
-            this.setState({ feedbackStatus: "error", downloadFileName: data.filename, feedbackErrMsg: data.err });
+            this.setState({ feedbackStatus: "error", feedbackErrMsg: data.err });
           }
         })
     }
