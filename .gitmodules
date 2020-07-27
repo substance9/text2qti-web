@@ -1,0 +1,4 @@
+[submodule "server/text2qti"]
+	path = server/text2qti
+	url = https://github.com/substance9/text2qti.git
+	branch = web_use

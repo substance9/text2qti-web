@@ -15,6 +15,8 @@ from text2qti.config import Config
 from text2qti.quiz import Quiz
 from text2qti.qti import QTI
 
+import traceback
+
 app = Flask(__name__)
 CORS(app)
 api = Blueprint('api', __name__)
@@ -58,7 +60,8 @@ def process_mdtext():
     try:
         output_filename = process_md_text(mdtext)
     except Exception as e:
-        error = str(e)
+        #error = str(e.print)
+        error = traceback.format_exc()
         return_dict = {'err':error}
         return jsonify(return_dict), 500
     
@@ -80,7 +83,8 @@ def process_mdfile():
     try:
         output_filename = process_md_file(temp_upload_md_file_dir/new_filename)
     except Exception as e:
-        error = str(e)
+        #error = str(e.print)
+        error = traceback.format_exc()
         return_dict = {'err':error}
         return jsonify(return_dict), 500
     
