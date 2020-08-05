@@ -1,19 +1,15 @@
 version: "3"
 services:
   frontend:
-    container_name: frontend
-    build:
-      context: ./
-      dockerfile: Dockerfile
     image: substance9/text2qti-web-frontend:latest
+    container_name: text2qti-web-frontend
     ports:
       - 7553:80
 
   backend:
+    image: substance9/text2qti-web-backend:latest
     restart: always
     container_name: backend
-    build: ./server
-    image: substance9/text2qti-web-backend:latest
     expose:
       - 3001
     environment:
