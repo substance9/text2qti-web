@@ -8,11 +8,11 @@ const NavBar = () => {
   return (
     <React.Fragment>
       <div className={styles.skipLink}>
-        <a href="#mainContent">Skip to Main Content</a>
+        {/* <a href="#mainContent">Skip to Main Content</a> */}
       </div>
       <nav className="navbar navbar-expand-sm navbar-heavy border-bottom justify-content-between">
         <Link className="navbar-brand" to="/">
-          <h2>Markdown to (Canvas) QTI File Converter </h2>
+          <h2>Markdown to (Canvas) QTI File Converter (beta) </h2>
         </Link>
         <div className="navbar-nav">
           <Link className="nav-item nav-link active" to="/">
